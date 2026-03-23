@@ -401,3 +401,17 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* Ajuste para pantallas grandes (escritorio) */
+@media (min-width: 900px) {
+  .numpad {
+    grid-template-columns: repeat(3, 120px);
+    gap: 20px;
+  }
+
+  .numpad-btn {
+    font-size: 32px;
+    padding: 20px;
+    border-radius: 12px;
+  }
+}
