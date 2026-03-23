@@ -3,7 +3,8 @@ export default function NumPad({ onInput, onDelete, onSubmit }) {
 
   return (
     <div className="numpad">
-      {nums.map((n) => (
+      {/* Números 1–9 */}
+      {nums.map(n => (
         <button
           key={n}
           className="numpad-btn"
@@ -13,14 +14,17 @@ export default function NumPad({ onInput, onDelete, onSubmit }) {
         </button>
       ))}
 
+      {/* Borrar */}
       <button className="numpad-btn special" onClick={onDelete}>
         ←
       </button>
 
+      {/* Cero */}
       <button className="numpad-btn" onClick={() => onInput(0)}>
         0
       </button>
 
+      {/* OK */}
       <button className="numpad-btn ok" onClick={onSubmit}>
         OK
       </button>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ABNTable from "./components/ABNTable";
 import NumPad from "./components/NumPad";
 import confetti from "canvas-confetti";
@@ -21,28 +21,30 @@ function generateOperation(level) {
   return { a, b, op: "+" };
 }
 
+function createRowsForOperation(op) {
+  const big = Math.max(op.a, op.b).toString();
+  const small = Math.min(op.a, op.b).toString();
+  return [
+    { move: "", first: big, second: small },
+    { move: "", first: "", second: "" }
+  ];
+}
+
 export default function App() {
   const [difficulty, setDifficulty] = useState(1);
-  const [operation, setOperation] = useState(generateOperation(1));
+  const [operation, setOperation] = useState(() => generateOperation(1));
+  const [rows, setRows] = useState(() => createRowsForOperation(generateOperation(1)));
   const [completed, setCompleted] = useState(false);
 
   const [modalMessage, setModalMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const [activeField, setActiveField] = useState(null);
+  const [activeField, setActiveField] = useState([1, "move"]);
 
   const getBig = () => Math.max(operation.a, operation.b);
   const getSmall = () => Math.min(operation.a, operation.b);
+  const result = operation.a + operation.b;
 
-  const [rows, setRows] = useState([
-    { move: "", first: getBig().toString(), second: getSmall().toString() }
-  ]);
-
-  // ⭐ AL INICIAR LA APP → crear la primera fila editable automáticamente
-  useEffect(() => {
-    setRows(prev => [...prev, { move: "", first: "", second: "" }]);
-    setActiveField([1, "move"]);
-  }, []);
 
   const showError = (msg) => {
     setModalMessage(msg);
@@ -85,7 +87,9 @@ export default function App() {
       curr.firstValid = first === expectedFirst;
 
       if (!curr.firstValid) {
-        showError(`Este es el resultado de sumar el número anterior mas el que muevo: ${prev.first} + ${move} = ${expectedFirst}`);
+        showError(
+          `Este es el resultado de sumar el número anterior mas el que muevo: ${prev.first} + ${move} = ${expectedFirst}`
+        );
         return true;
       }
     }
@@ -95,7 +99,9 @@ export default function App() {
       curr.secondValid = second === expectedSecond;
 
       if (!curr.secondValid) {
-        showError(`Este es el resultado de restar al número anterior el que muevo: ${prev.second} - ${move} = ${expectedSecond}`);
+        showError(
+          `Este es el resultado de restar al número anterior el que muevo: ${prev.second} - ${move} = ${expectedSecond}`
+        );
         return true;
       }
     }
@@ -123,8 +129,7 @@ export default function App() {
     if (rowIndex === 0) return;
 
     const newRows = [...rows];
-    newRows[rowIndex][field] = newRows[rowIndex][field] + num;
-
+    newRows[rowIndex][field] = (newRows[rowIndex][field] || "") + num;
     setRows(newRows);
   };
 
@@ -135,8 +140,7 @@ export default function App() {
     if (rowIndex === 0) return;
 
     const newRows = [...rows];
-    newRows[rowIndex][field] = newRows[rowIndex][field].slice(0, -1);
-
+    newRows[rowIndex][field] = (newRows[rowIndex][field] || "").slice(0, -1);
     setRows(newRows);
   };
 
@@ -184,7 +188,6 @@ export default function App() {
       ) {
         setCompleted(true);
 
-        // Lanzar confeti 3 veces seguidas
         for (let i = 0; i < 3; i++) {
           setTimeout(() => {
             confetti({
@@ -192,9 +195,8 @@ export default function App() {
               spread: 80,
               origin: { y: 0.6 }
             });
-          }, i * 1000); // 1000 ms entre explosiones
+          }, i * 1000);
         }
-
 
         return;
       }
@@ -207,19 +209,17 @@ export default function App() {
     }
   };
 
-  const restartProblem = () => {
-    const big = getBig();
-    const small = getSmall();
-
-    setRows([{ move: "", first: big.toString(), second: small.toString() }]);
+  const resetStateForOperation = (op) => {
+    setOperation(op);
+    setRows(createRowsForOperation(op));
+    setActiveField([1, "move"]);
     setCompleted(false);
     setModalMessage("");
     setShowModal(false);
+  };
 
-    setTimeout(() => {
-      setRows(prev => [...prev, { move: "", first: "", second: "" }]);
-      setActiveField([1, "move"]);
-    }, 0);
+  const restartProblem = () => {
+    resetStateForOperation(operation);
   };
 
   const newProblem = () => {
@@ -229,31 +229,33 @@ export default function App() {
   const changeDifficulty = (level) => {
     setDifficulty(level);
     const newOp = generateOperation(level);
-    setOperation(newOp);
-
-    const big = Math.max(newOp.a, newOp.b);
-    const small = Math.min(newOp.a, newOp.b);
-
-    setRows([{ move: "", first: big.toString(), second: small.toString() }]);
-
-    setActiveField(null);
-    setCompleted(false);
-    setModalMessage("");
-    setShowModal(false);
-
-    setTimeout(() => {
-      setRows(prev => [...prev, { move: "", first: "", second: "" }]);
-      setActiveField([1, "move"]);
-    }, 0);
+    resetStateForOperation(newOp);
   };
 
   return (
     <div className="app-wrapper">
-
       <div className="top-buttons">
-        <button className="icon-btn" onClick={newProblem} title="Nuevo problema">🎲</button>
-        <button className="icon-btn" onClick={restartProblem} title="Reiniciar este problema">🔄</button>
-        <button className="icon-btn close-btn" onClick={() => window.close()} title="Cerrar aplicación">❌</button>
+        <button
+          className="icon-btn"
+          onClick={newProblem}
+          title="Nuevo problema"
+        >
+          🎲
+        </button>
+        <button
+          className="icon-btn"
+          onClick={restartProblem}
+          title="Reiniciar este problema"
+        >
+          🔄
+        </button>
+        <button
+          className="icon-btn close-btn"
+          onClick={() => window.close()}
+          title="Cerrar aplicación"
+        >
+          ❌
+        </button>
       </div>
 
       {showModal && (
@@ -261,7 +263,10 @@ export default function App() {
           <div className="modal-window">
             <h2>Revisa este paso</h2>
             <p>{modalMessage}</p>
-            <button className="modal-button" onClick={() => setShowModal(false)}>
+            <button
+              className="modal-button"
+              onClick={() => setShowModal(false)}
+            >
               Entendido
             </button>
           </div>
@@ -271,8 +276,12 @@ export default function App() {
       {completed && (
         <div className="modal-overlay">
           <div className="modal-window success-window">
-            <h2>¡Lo has conseguido!</h2>
-            <p>Es genial. A ver si superas este otro…</p>
+            <h2>¡Genial, lo has conseguido!</h2>
+
+            <p>
+              La suma de {operation.a} y {operation.b} es{" "}
+              <strong>{operation.a + operation.b}</strong>.
+            </p>
 
             <button
               className="modal-button success-button"
@@ -283,6 +292,7 @@ export default function App() {
           </div>
         </div>
       )}
+
 
       <div className="difficulty-container">
         <label className="difficulty-label">Nivel:</label>

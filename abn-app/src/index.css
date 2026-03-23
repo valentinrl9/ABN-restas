@@ -2,13 +2,8 @@ body {
   margin: 0;
   font-family: "Comic Sans MS", "Fredoka", sans-serif;
   color: #333;
-  background-image: url("/img/fondo.png");
-  background-size: cover;      /* La imagen cubre toda la pantalla */
-  background-position: center; /* Centrada */
-  background-repeat: no-repeat;/* No se repite */
-  background-attachment: fixed;/* Efecto elegante: fondo fijo */
+  background: url("/img/fondo.png") center/cover no-repeat fixed;
 }
-
 
 /* Botones superiores */
 .top-buttons {
@@ -42,7 +37,6 @@ body {
   background: #ffcccc;
 }
 
-
 /* Operación */
 .operation {
   text-align: center;
@@ -51,11 +45,23 @@ body {
   margin-bottom: 0;
 }
 
+.operation-sorted {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #0bab10;
+  margin-top: -10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.sorted-label {
+  font-size: 1rem;
+}
+
 /* Flecha */
 .arrow {
   text-align: center;
-  margin-top: -5px;
-  margin-bottom: 10px;
+  margin: -5px 0 10px;
   font-size: 2rem;
   color: #19a0fa;
   font-weight: bold;
@@ -75,46 +81,50 @@ body {
   cursor: pointer;
 }
 
+/* Contenedor tabla ABN con scroll */
+.abn-table-wrapper {
+  max-height: 45vh;
+  overflow-y: auto;
+  margin: 0 auto;
+  width: fit-content;
+}
+
 /* Tabla ABN */
 .abn-table {
-  width: auto;
-  margin: 0 auto;
   table-layout: fixed;
   border-collapse: separate;
-  border-spacing: 3px; /* espacio entre celdas */
+  border-spacing: 3px;
+  margin: 0 auto;
 }
 
 .abn-table td {
-  width: 100px;      /* 🔥 ancho fijo */
-  height: 90px;     /* 🔥 alto fijo */
-  padding: 0;       /* evita que crezca */
+  width: 60px;
+  height: 40px;
+  padding: 0;
   text-align: center;
 }
 
 .abn-header {
   background: #ffec42;
-  padding: 10px;
+  padding: 8px;
   border-radius: 10px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
+/* Inputs ABN */
 .abn-input {
-  width: 80px;          /* 🔥 ancho fijo */
-  height: 70px;         /* 🔥 alto fijo */
-  padding: 0;           /* evita que crezca */
-  font-size: 1.2rem;    /* ajusta el tamaño del número */
+  width: 50px;
+  height: 35px;
+  padding: 0;
+  font-size: 1rem;
   text-align: center;
   border-radius: 8px;
   border: 2px solid #19a0fa;
-  box-sizing: border-box; /* 🔥 evita que el padding cambie el tamaño */
-  margin: 0 4px;        /* espacio entre inputs */
+  box-sizing: border-box;
+  margin: 0 2px;
 }
 
-/* Estados */
-.abn-input.empty {
-  background: #ffffff;
-}
-
+.abn-input.empty,
 .abn-input.filled {
   background: #ffffff;
 }
@@ -129,19 +139,55 @@ body {
   border-color: #E74C3C;
 }
 
-/* NumPad */
+/* Casilla bloqueada */
+.abn-input.locked {
+  background: #ddd !important;
+  border-color: #aaa !important;
+  color: #666;
+}
+
+/* Celda activa */
+.abn-input.active {
+  border: 3px solid #4A90E2 !important;
+  background: #E8F2FF !important;
+  position: relative;
+}
+
+.abn-input.active::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  width: 2px;
+  height: 60%;
+  background: #4A90E2;
+  transform: translateY(-50%);
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* NumPad responsivo universal */
 .numpad {
   display: grid;
-  grid-template-columns: repeat(3, 90px);
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 22vw));
+  gap: 3vw;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .numpad-btn {
-  font-size: 2rem;
-  padding: 18px;
-  border-radius: 15px;
+  font-size: 5.5vw;
+  padding: 3vw;
+  border-radius: 12px;
   border: none;
   background: #A5D6A7;
   color: #1B5E20;
@@ -165,20 +211,12 @@ body {
   color: #01579B;
 }
 
-/* Casilla bloqueada (fila inicial) */
-.abn-input.locked {
-  background: #ddd !important;
-  border-color: #aaa !important;
-  color: #666;
-}
-
-/* Contenedor del selector */
+/* Selector dificultad */
 .difficulty-container {
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Etiqueta "Dificultad" */
 .difficulty-label {
   font-size: 1.3rem;
   margin-right: 10px;
@@ -186,7 +224,6 @@ body {
   font-weight: bold;
 }
 
-/* Selector */
 .difficulty-select {
   font-size: 1.2rem;
   padding: 8px 12px;
@@ -199,51 +236,15 @@ body {
   transition: 0.2s ease;
 }
 
-/* Hover */
 .difficulty-select:hover {
   background: #FFF59D;
 }
 
-/* Al hacer clic */
 .difficulty-select:active {
   transform: scale(0.97);
 }
 
-.operation-sorted {
-  text-align: center;
-  font-size: 1.8rem;
-  color: #0bab10;
-  margin-top: -10px;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-/* Celda activa */
-.abn-input.active {
-  border: 3px solid #4A90E2 !important;
-  background: #E8F2FF !important;
-  position: relative;
-}
-
-/* Cursor parpadeante simulado */
-.abn-input.active::after {
-  content: "";
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  width: 2px;
-  height: 60%;
-  background: #4A90E2;
-  transform: translateY(-50%);
-  animation: blink 0.8s infinite;
-}
-
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
+/* Mensajes */
 .success-message {
   margin-top: 15px;
   padding: 12px;
@@ -272,18 +273,25 @@ body {
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translate(-50%, 20px); }
-  10% { opacity: 1; transform: translate(-50%, 0); }
-  90% { opacity: 1; transform: translate(-50%, 0); }
-  100% { opacity: 0; transform: translate(-50%, 20px); }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
 }
 
+/* Modal */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0,0,0,0.55);
   display: flex;
   justify-content: center;
@@ -326,11 +334,6 @@ body {
   background: #45A049;
 }
 
-@keyframes popIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
 .success-window {
   border: 2px solid #4CAF50;
 }
@@ -343,10 +346,58 @@ body {
   background: #45A049;
 }
 
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive extra */
 @media (max-width: 480px) {
+  .operation {
+    font-size: 2rem;
+  }
+
+  .operation-sorted {
+    font-size: 1.4rem;
+  }
+
+  .arrow {
+    font-size: 1.5rem;
+    letter-spacing: 6px;
+  }
+
+  .add-step-btn {
+    font-size: 1.1rem;
+    padding: 10px;
+  }
+
+  .difficulty-label {
+    font-size: 1.1rem;
+  }
+
+  .difficulty-select {
+    font-size: 1rem;
+    padding: 6px 10px;
+  }
+
+  .abn-table-wrapper {
+    max-height: 40vh;
+  }
+
   .abn-table td {
-    width: 45px;
-    max-width: 45px;
-    padding: 3px;
+    width: 40px;
+    height: 32px;
+  }
+
+  .abn-input {
+    width: 32px;
+    height: 28px;
+    font-size: 0.9rem;
   }
 }

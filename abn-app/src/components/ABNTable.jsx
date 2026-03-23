@@ -1,73 +1,90 @@
 export default function ABNTable({ rows, activeField, onFocusField }) {
+  
+  // Función para generar clases de cada input
+  const getInputClass = (row, field, isLocked, isActive) => {
+    const value = row[field];
+    const validKey = field === "move" ? "valid" : field + "Valid";
+    const validity = row[validKey];
+
+    let cls = "abn-input ";
+
+    if (isLocked) cls += "locked ";
+    else if (value === "") cls += "empty ";
+    else if (validity === true) cls += "valid ";
+    else if (validity === false) cls += "invalid ";
+    else cls += "filled ";
+
+    if (isActive) cls += "active ";
+
+    return cls.trim();
+  };
+
   return (
-    <table className="abn-table">
-      <thead>
-        <tr>
-          <th className="abn-header">Muevo</th>
-          <th className="abn-header">1º núm.</th>
-          <th className="abn-header">2º núm.</th>
-        </tr>
-      </thead>
+    <div className="abn-table-wrapper">
+      <table className="abn-table">
+        <thead>
+          <tr>
+            <th className="abn-header">Muevo</th>
+            <th className="abn-header">1º núm.</th>
+            <th className="abn-header">2º núm.</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        {rows.map((row, i) => {
-          const isLocked = i === 0;
+        <tbody>
+          {rows.map((row, i) => {
+            const isLocked = i === 0;
 
-          return (
-            <tr key={i}>
+            return (
+              <tr key={i}>
+                {/* MOVIMIENTO */}
+                <td>
+                  <input
+                    value={row.move}
+                    readOnly
+                    onFocus={() => !isLocked && onFocusField(i, "move")}
+                    className={getInputClass(
+                      row,
+                      "move",
+                      isLocked,
+                      activeField?.[0] === i && activeField?.[1] === "move"
+                    )}
+                  />
+                </td>
 
-              {/* MOVIMIENTO */}
-              <td>
-                <input
-                  value={row.move}
-                  onFocus={() => !isLocked && onFocusField(i, "move")}
-                  readOnly
-                  className={`abn-input
-                    ${row.move === "" ? "empty" :
-                      row.valid === true ? "valid" :
-                      row.valid === false ? "invalid" : "filled"}
-                    ${isLocked ? "locked" : ""}
-                    ${activeField && activeField[0] === i && activeField[1] === "move" ? "active" : ""}
-                  `}
-                />
-              </td>
+                {/* PRIMER NÚMERO */}
+                <td>
+                  <input
+                    value={row.first}
+                    readOnly
+                    onFocus={() => !isLocked && onFocusField(i, "first")}
+                    className={getInputClass(
+                      row,
+                      "first",
+                      isLocked,
+                      activeField?.[0] === i && activeField?.[1] === "first"
+                    )}
+                  />
+                </td>
 
-              {/* PRIMER NÚMERO */}
-              <td>
-                <input
-                  value={row.first}
-                  onFocus={() => !isLocked && onFocusField(i, "first")}
-                  readOnly
-                  className={`abn-input
-                    ${row.first === "" ? "empty" :
-                      row.firstValid === true ? "valid" :
-                      row.firstValid === false ? "invalid" : "filled"}
-                    ${isLocked ? "locked" : ""}
-                    ${activeField && activeField[0] === i && activeField[1] === "first" ? "active" : ""}
-                  `}
-                />
-              </td>
-
-              {/* SEGUNDO NÚMERO */}
-              <td>
-                <input
-                  value={row.second}
-                  onFocus={() => !isLocked && onFocusField(i, "second")}
-                  readOnly
-                  className={`abn-input
-                    ${row.second === "" ? "empty" :
-                      row.secondValid === true ? "valid" :
-                      row.secondValid === false ? "invalid" : "filled"}
-                    ${isLocked ? "locked" : ""}
-                    ${activeField && activeField[0] === i && activeField[1] === "second" ? "active" : ""}
-                  `}
-                />
-              </td>
-
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+                {/* SEGUNDO NÚMERO */}
+                <td>
+                  <input
+                    value={row.second}
+                    readOnly
+                    onFocus={() => !isLocked && onFocusField(i, "second")}
+                    className={getInputClass(
+                      row,
+                      "second",
+                      isLocked,
+                      activeField?.[0] === i && activeField?.[1] === "second"
+                    )}
+                  />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
