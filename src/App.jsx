@@ -307,10 +307,11 @@ export default function App() {
               />
             </div>
 
-            <h2>Información Corporativa</h2>
+            <h2>Información</h2>
 
-            <p><strong>Nombre:</strong> Valentín Ruiz León</p>
-            <p><strong>Profesión:</strong> Desarrollador de Aplicaciones Web</p>
+            <p><strong>Nombre de la aplicación:</strong> Suma ABN</p>
+            <p><strong>Creado por:</strong> Valentín Ruiz León</p>
+            <p>Desarrollador de Aplicaciones Web</p>
             <p>
               <strong>GitHub:</strong>{" "}
               <a href="https://github.com/valentinrl9" target="_blank">
