@@ -44,6 +44,10 @@ export default function App() {
   const getBig = () => Math.max(operation.a, operation.b);
   const getSmall = () => Math.min(operation.a, operation.b);
   const result = operation.a + operation.b;
+  
+  const [showInfo, setShowInfo] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
+
 
 
   const showError = (msg) => {
@@ -232,8 +236,58 @@ export default function App() {
     resetStateForOperation(newOp);
   };
 
+  {showInfo && (
+    <div className="modal">
+      <div className="modal-content">
+        <h2>Información Corporativa</h2>
+        <p><strong>Nombre:</strong> Valentín Ruiz León</p>
+        <p><strong>Profesión:</strong> Desarrollador de Aplicaciones Web</p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/valentinrl9" target="_blank">valentinrl9</a></p>
+
+        <button className="close-btn" onClick={() => setShowInfo(false)}>Cerrar</button>
+      </div>
+    </div>
+  )}
+
+
+  {showHelp && (
+    <div className="modal">
+      <div className="modal-content">
+        <h2>Ayuda / Tutorial</h2>
+        <p>Bienvenido a la aplicación ABN. Aquí tienes una guía rápida:</p>
+        <ul>
+          <li>Al iniciar la aplicación se genera automáticamente una operación de suma.</li>
+          <li>Puedes seleccionar el nivel de dificultad entre 1 y 5.</li>
+          <li>Justo debajo se muestra la misma suma ordenada de mayor a menor para indicar el sentido correcto de los movimientos.</li>
+          <li>Introduce en cada cuadro los valores que consideres adecuados para resolver la operación paso a paso.</li>
+          <li>Mientras los valores introducidos sean correctos, la operación avanzará con normalidad.</li>
+          <li>Si algún movimiento, suma o resta es incorrecto, aparecerá un mensaje de error indicando que debes revisarlo.</li>
+          <li>El botón con la flecha roja permite borrar el último valor introducido.</li>
+          <li>El botón «OK» confirma el valor introducido y continúa con el siguiente paso.</li>
+          <li>Utiliza los botones disponibles para seleccionar el tipo de cálculo que deseas practicar.</li>
+          <li>Puedes deslizar o pulsar sobre la interfaz para visualizar los resultados paso a paso.</li>
+          <li>Al completar correctamente toda la operación, aparecerá un mensaje de felicitación acompañado de una animación de confeti.</li>
+        </ul>
+
+
+        <button className="close-btn" onClick={() => setShowHelp(false)}>Cerrar</button>
+      </div>
+    </div>
+  )}
+
+
   return (
     <div className="app-wrapper">
+      <div className="top-left-buttons">
+        <button className="logo-btn" onClick={() => setShowInfo(true)}>
+          <img src="/logovr.png" alt="Logo" />
+        </button>
+
+        <button className="help-btn" onClick={() => setShowHelp(true)}>
+          ?
+        </button>
+      </div>
+
       <div className="top-buttons">
         <button
           className="icon-btn"
