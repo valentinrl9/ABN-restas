@@ -88,7 +88,7 @@ export default function App() {
 
       if (!curr.firstValid) {
         showError(
-          `Este es el resultado de sumar el número anterior mas el que muevo: ${prev.first} + ${move} = ${expectedFirst}`
+          `Este es el resultado de sumar el número anterior mas el que muevo: ${prev.first} + ${move} = ?`
         );
         return true;
       }
@@ -100,7 +100,7 @@ export default function App() {
 
       if (!curr.secondValid) {
         showError(
-          `Este es el resultado de restar al número anterior el que muevo: ${prev.second} - ${move} = ${expectedSecond}`
+          `Este es el resultado de restar al número anterior el que muevo: ${prev.second} - ${move} = ?`
         );
         return true;
       }
