@@ -18,8 +18,10 @@ function generateNumber(level) {
 function generateOperation(level) {
   const a = generateNumber(level);
   const b = generateNumber(level);
-  return { a, b, op: "+" };
-}
+  const big = Math.max(a, b);
+  const small = Math.min(a, b);
+  return { a: big, b: small, op: "-" }; 
+}  
 
 function createRowsForOperation(op) {
   const big = Math.max(op.a, op.b).toString();
@@ -45,17 +47,13 @@ export default function App() {
   const [showInfo, setShowInfo] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
-  const getBig = () => Math.max(operation.a, operation.b);
-  const getSmall = () => Math.min(operation.a, operation.b);
-  const result = operation.a + operation.b;
-
   const showError = (msg) => {
     setModalMessage(msg);
     setShowModal(true);
   };
 
   const isValidMove = (move, prevFirst, prevSecond) => {
-    const m = parseInt(move);
+  const m = parseInt(move);
     if (isNaN(m) || m <= 0) return false;
     const smaller = Math.min(parseInt(prevFirst), parseInt(prevSecond));
     return m <= smaller;
@@ -86,24 +84,26 @@ export default function App() {
     }
 
     if (field === "first") {
-      const expectedFirst = parseInt(prev.first) + move;
+      // CAMBIO: Ahora restamos el movimiento del primer número
+      const expectedFirst = parseInt(prev.first) - move;
       curr.firstValid = first === expectedFirst;
 
       if (!curr.firstValid) {
         showError(
-          `Este es el resultado de sumar el número anterior mas el que muevo: ${prev.first} + ${move} = ?`
+          `Restamos al número anterior lo que movemos: ${prev.first} - ${move} = ?`
         );
         return true;
       }
     }
 
     if (field === "second") {
+      // Este se queda igual (ya restaba), pero ajustamos el mensaje por coherencia
       const expectedSecond = parseInt(prev.second) - move;
       curr.secondValid = second === expectedSecond;
 
       if (!curr.secondValid) {
         showError(
-          `Este es el resultado de restar al número anterior el que muevo: ${prev.second} - ${move} = ?`
+          `Restamos al sustraendo lo que movemos: ${prev.second} - ${move} = ?`
         );
         return true;
       }
@@ -282,8 +282,8 @@ export default function App() {
             <h2>¡Genial, lo has conseguido!</h2>
 
             <p>
-              La suma de {operation.a} y {operation.b} es{" "}
-              <strong>{operation.a + operation.b}</strong>.
+              La resta de {operation.a} y {operation.b} es{" "}
+              <strong>{operation.a - operation.b}</strong>.
             </p>
 
             <button className="modal-button success-button" onClick={newProblem}>
@@ -309,7 +309,7 @@ export default function App() {
 
             <h2>Información</h2>
 
-            <p><strong>Nombre de la aplicación:</strong> Suma ABN</p>
+            <p><strong>Nombre de la aplicación:</strong> Resta ABN</p>
             <p><strong>Creado por:</strong> Valentín Ruiz León</p>
             <p>Desarrollador de Aplicaciones Web</p>
             <p>
@@ -334,9 +334,8 @@ export default function App() {
             <h2>Ayuda / Tutorial</h2>
 
             <ul>
-              <li>Al iniciar la aplicación se genera automáticamente una operación de suma.</li>
+              <li>Al iniciar la aplicación se genera automáticamente una operación de resta.</li>
               <li>Puedes seleccionar el nivel de dificultad entre 1 y 5.</li>
-              <li>Justo debajo se muestra la misma suma ordenada de mayor a menor para indicar el sentido correcto de los movimientos.</li>
               <li>Introduce en cada cuadro los valores que consideres adecuados para resolver la operación paso a paso.</li>
               <li>Mientras los valores introducidos sean correctos, la operación avanzará con normalidad.</li>
               <li>Si algún movimiento, suma o resta es incorrecto, aparecerá un mensaje de error indicando que debes revisarlo.</li>
@@ -374,13 +373,6 @@ export default function App() {
       <h1 className="operation">
         {operation.a} {operation.op} {operation.b}
       </h1>
-
-      <div className="operation-sorted">
-        {getBig()} {operation.op} {getSmall()}
-        <span className="sorted-label"> (ordenado)</span>
-      </div>
-
-      <div className="arrow">⟵</div>
 
       {/* TABLA ABN */}
       <ABNTable

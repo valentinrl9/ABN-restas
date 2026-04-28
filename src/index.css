@@ -14,8 +14,8 @@ body {
 }
 
 .icon-btn {
-  background: #ffffffcc;
-  border: 1px solid #ccc;
+  background: #ffb347cc;
+  border: 1px solid #e67e22;
   border-radius: 8px;
   padding: 6px 10px;
   font-size: 20px;
@@ -24,31 +24,31 @@ body {
 }
 
 .icon-btn:hover {
-  background: #f0f0f0;
+  background: #ffcc80;
   transform: scale(1.1);
 }
 
 .close-btn {
-  background: #ffddddcc;
-  border-color: #ff8888;
+  background: #ff6b6bcc;
+  border-color: #ee5253;
 }
 
 .close-btn:hover {
-  background: #ffcccc;
+  background: #ff4757;
 }
 
 /* Operación */
 .operation {
   text-align: center;
   font-size: 2.5rem;
-  color: #19a0fa;
+  color: #d63031;
   margin-bottom: 0;
 }
 
 .operation-sorted {
   text-align: center;
   font-size: 1.8rem;
-  color: #0bab10;
+  color: #e67e22;
   margin-top: -10px;
   margin-bottom: 5px;
   font-weight: bold;
@@ -63,7 +63,7 @@ body {
   text-align: center;
   margin: -5px 0 10px;
   font-size: 2rem;
-  color: #19a0fa;
+  color: #ff7675;
   font-weight: bold;
   letter-spacing: 10px;
 }
@@ -74,12 +74,13 @@ body {
   padding: 12px 20px;
   font-size: 1.4rem;
   width: 100%;
-  background: #ffec42;
+  background: #ff9f43;
   border: none;
   border-radius: 15px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   cursor: pointer;
 }
+
 
 /* Contenedor tabla ABN con scroll */
 .abn-table-wrapper {
@@ -105,7 +106,7 @@ body {
 }
 
 .abn-header {
-  background: #ffec42;
+  background: #ffbe76;
   padding: 8px;
   border-radius: 10px;
   font-size: 1.1rem;
@@ -119,7 +120,7 @@ body {
   font-size: 1rem;
   text-align: center;
   border-radius: 8px;
-  border: 2px solid #19a0fa;
+  border: 2px solid #e67e22;
   box-sizing: border-box;
   margin: 0 2px;
 }
@@ -148,8 +149,8 @@ body {
 
 /* Celda activa */
 .abn-input.active {
-  border: 3px solid #4A90E2 !important;
-  background: #E8F2FF !important;
+  border: 3px solid #d35400 !important;
+  background: #fff3e0 !important;
   position: relative;
 }
 
@@ -160,7 +161,7 @@ body {
   top: 50%;
   width: 2px;
   height: 60%;
-  background: #4A90E2;
+  background: #d35400;
   transform: translateY(-50%);
   animation: blink 0.8s infinite;
 }
@@ -189,8 +190,8 @@ body {
   padding: 3vw;
   border-radius: 12px;
   border: none;
-  background: #A5D6A7;
-  color: #1B5E20;
+  background: #ffe0b2;
+  color: #e65100;
   font-weight: bold;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   cursor: pointer;
@@ -202,13 +203,13 @@ body {
 }
 
 .numpad-btn.special {
-  background: #F48FB1;
-  color: #880E4F;
+  background: #ffab91;
+  color: #bf360c;
 }
 
 .numpad-btn.ok {
-  background: #6EC6FF;
-  color: #01579B;
+  background: #ffcc80;
+  color: #e65100;
 }
 
 /* Selector dificultad */
@@ -220,7 +221,7 @@ body {
 .difficulty-label {
   font-size: 1.3rem;
   margin-right: 10px;
-  color: #19a0fa;
+  color: #e67e22;
   font-weight: bold;
 }
 
@@ -228,7 +229,7 @@ body {
   font-size: 1.2rem;
   padding: 8px 12px;
   border-radius: 12px;
-  border: 2px solid #19a0fa;
+  border: 2px solid #e67e22;
   background: #FFFDE7;
   color: #333;
   cursor: pointer;
@@ -248,13 +249,13 @@ body {
 .success-message {
   margin-top: 15px;
   padding: 12px;
-  background: #C8F7C5;
-  border: 2px solid #2ECC71;
+  background: #ffeaa7;
+  border: 2px solid #fab1a0;
   border-radius: 10px;
   text-align: center;
   font-size: 1.4rem;
   font-weight: bold;
-  color: #1B5E20;
+  color: #d35400;
 }
 
 .toast-error {
@@ -321,7 +322,7 @@ body {
 }
 
 .modal-button {
-  background: #4CAF50;
+  background: #ff8c42;
   color: white;
   border: none;
   padding: 10px 18px;
@@ -331,19 +332,19 @@ body {
 }
 
 .modal-button:hover {
-  background: #45A049;
+  background: #e67e22;
 }
 
 .success-window {
-  border: 2px solid #4CAF50;
+  border: 2px solid #ff8c42;
 }
 
 .success-button {
-  background: #4CAF50;
+  background: #ff8c42;
 }
 
 .success-button:hover {
-  background: #45A049;
+  background: #e67e22;
 }
 
 @keyframes popIn {
@@ -428,7 +429,7 @@ body {
 .logo-btn,
 .help-btn {
   background: white;
-  border: 1px solid #ccc;
+  border: 1px solid #ff8c42;
   border-radius: 6px;
   padding: 6px;
   cursor: pointer;
@@ -437,9 +438,14 @@ body {
   justify-content: center;
 }
 
+.logo-btn:hover, .help-btn:hover {
+  background: #fff3e0;
+}
+
 .logo-btn img {
   width: 28px;
   height: 28px;
+  object-fit: contain; /* Evita que se deforme */
 }
 
 .help-btn {
@@ -447,6 +453,7 @@ body {
   width: 32px;
   height: 32px;
   font-weight: bold;
+  color: #e67e22; 
 }
 
 .modal {
@@ -455,7 +462,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(85, 30, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
